@@ -1,0 +1,17 @@
+# OS generated files #
+__pycache__
+.DS_Store
+
+# Ingore the results #
+generated_data_baseline/
+generated_data_combined/
+
+# Ignore the original data #
+ABIDE_ML_CorrVec/
+T1_encoded/
+fmri_summary_abideI_II.hdf5
+
+# Ignore the preprocessed data #
+features/
+fmri_summaries/
+VAE.npy
