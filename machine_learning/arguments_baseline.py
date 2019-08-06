@@ -99,7 +99,7 @@ def obtain_arguments():
     else:
         raise ValueError("arg.adj_type cannot be \"{}\".".format(args.adj_type))
         
-    str_settings = "{}__{}__{}__{}__{}/{}__{}__{}".format(str_adj_settings, args.polynomial_degree, args.features_sparsity, args.dataset_type, args.ds, args.atlas, args.bptf, args.confounds)
+    str_settings = "{}__{}__{}__{}__{}/{}__{}__{}__{}".format(str_adj_settings, args.polynomial_degree, args.features_sparsity, args.dataset_type, args.ds, args.atlas, args.bptf, args.confounds, args.n_features)
     
     args.dir_name_embeddings = "{}/store_embeddings/{}".format(str_main_folder, str_settings)
 

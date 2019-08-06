@@ -185,7 +185,7 @@ def reduce_dim_ridge_(n_features, data, matrix):
     if n_features < 0:
         print("Fold-{}: No features removed.".format(data["fold_i"]))
         return matrix
-    if n_features >= matrix.shape[1]:
+    if n_features > matrix.shape[1]:
         raise ValueError("Fold-{}: Amount of features {} is lower than the amount features to reduce to {}.".format(
                 data["fold_i"], matrix.shape[1], n_features))
         return matrix
