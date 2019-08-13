@@ -19,7 +19,7 @@ def obtain_arguments():
     parser.add_argument('--ds', type=str, default="abideids",
                         help='What dataset to use, only \"abideboth\", \"abide1\", \"abideids\" or \"NYU\" can be chosen.')
     
-    parser.add_argument('--print_epoch', type=int, default=10,
+    parser.add_argument('--print_epoch', type=int, default=50,
                         help='Print every n epochs.')
     
     parser.add_argument('--model', type=str, default="parisot_tf",
@@ -70,7 +70,7 @@ def obtain_arguments():
     parser.add_argument('--batch_size_3dcnn', type=float, default=32,
                         help='Batch size, for 3DCNN model only.')
     
-    parser.add_argument('--cnn_model', type=int, default=1,
+    parser.add_argument('--cnn_model', type=int, default=9,
                         help='Which 3DCNN model to use, for 3DCNN model only.')  
     
     

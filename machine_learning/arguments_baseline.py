@@ -19,7 +19,7 @@ def obtain_arguments():
     parser.add_argument('--ds', type=str, default="abideids",
                         help='What dataset to use, only \"abideboth\", \"abide1\", \"abideids\" or \"NYU\" can be chosen.')
     
-    parser.add_argument('--print_epoch', type=int, default=10,
+    parser.add_argument('--print_epoch', type=int, default=50,
                         help='Print every n epochs.')
     
     parser.add_argument('--model', type=str, default="parisot_py",
