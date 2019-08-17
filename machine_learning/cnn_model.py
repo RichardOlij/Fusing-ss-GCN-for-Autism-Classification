@@ -103,24 +103,26 @@ class Net3d4(nn.Module):
         self.conv1 = nn.Conv3d(1, 6, 5)
         self.pool1 = nn.MaxPool3d(2, 2)
         self.conv2 = nn.Conv3d(6, 16,5)
-        self.pool2 = nn.MaxPool3d(4, 4)
+        self.pool2 = nn.AdaptiveAvgPool3d((5, 5, 5))
         
-        self.lin_dim = 1280
+        self.lin_dim = 2000
         self.fc1 = nn.Linear(self.lin_dim, 2)  
+        self.drop = nn.Dropout(0.5)
 
     def forward(self, x):
         x = self.get_embedding(x)
         x = self.fc1(x)
+        x = self.drop(x)
         return x
     
     def get_embedding(self, x):
-       #  print(x.shape) # b,1,45,54,45
+        # print(x.shape) # b,1,45,54,45
         x = self.pool1(F.relu(self.conv1(x)))
         # print(x.shape) # b,6,20,25,20
         x = self.pool2(F.relu(self.conv2(x)))
-        # print(x.shape) # b,16,4,5,4
+        # print(x.shape) # b,16,5,5,5
         x = x.view(-1, self.lin_dim)
-        # print(x.shape) # b,1280
+        # print(x.shape) # b,2000
         return x
     
 class Net3d5(nn.Module):

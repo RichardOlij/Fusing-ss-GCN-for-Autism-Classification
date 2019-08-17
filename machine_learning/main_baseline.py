@@ -1,6 +1,6 @@
 from arguments_baseline import obtain_arguments
 from read import get_data_raw_hdf5_main,get_data_raw_npy_atlas, get_data_raw_amc_vae, gen_dataset_indices
-from utils import get_adjacency_matrix_vae, get_adjacency_matrix_fixed, chebyshev_polynomials, save_results, reduce_dim_ridge_smart
+from utils import get_adjacency_matrix_vae, get_adjacency_matrix_fixed, chebyshev_polynomials, save_results, reduce_dim_ridge_smart, correlation_matrix
 from train import train_single_fold
 from store_datadict import load_datadicts, save_datadicts
 
@@ -32,6 +32,8 @@ for fold_i, (train_ind, val_ind) in enumerate(gen_dataset_indices(data['id'], ar
             # Create adjacency matrix based on vae.
             data['vae'] = get_data_raw_amc_vae(data['id'])
             data['adj_raw'] = get_adjacency_matrix_vae(args, data['vae'], data)
+        elif args.adj_type == "correlation_only":
+            data['adj_raw'] = correlation_matrix(data['input_features'], "correlation")
         
         data['adj_support'] = chebyshev_polynomials(data['adj_raw'], args.polynomial_degree)
 
