@@ -35,7 +35,7 @@ def obtain_arguments():
     #%% Adjacency
     
     parser.add_argument('--adj_type', type=str, default="fixed",
-                        help='How is the adjacency determined, \"fixed\" or \"vae\" can be chosen.')
+                        help='How is the adjacency determined, \"fixed\", \"vae\" or "\correlation_only\" can be chosen.')
 
     parser.add_argument('--adj_fixed_specs', type=str, default="gender_0, site_0",
                         help='Only when \"adj_type\" is \"fixed\". A list of specification on which the fixed adjacency matrix is constructed. Available options are \"age_n\", \"gender_n\" or \"site_n\", where \"n\" is the maximum difference between samples.')
@@ -96,6 +96,8 @@ def obtain_arguments():
         str_adj_settings = "vae_{}".format(args.adj_threshold)
     elif args.adj_type == "fixed":
         str_adj_settings ="fixed_{}".format(args.adj_fixed_specs)
+    elif args.adj_type == "correlation_only":
+        str_adj_settings = "correlation_only"
     else:
         raise ValueError("arg.adj_type cannot be \"{}\".".format(args.adj_type))
         
