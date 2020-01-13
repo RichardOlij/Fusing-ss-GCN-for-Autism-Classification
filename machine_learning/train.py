@@ -18,6 +18,7 @@ def train_single_fold(args, data):
         wrapper = parisot_tf_wrapper
     else:
         raise ValueError("Model cannot be \"{}\".".format(args.model))
+    
 
     # The model and preprocessed data will be loaded.
     model, train_pre_args = wrapper.train_pre(args, data)
@@ -40,7 +41,7 @@ def train_single_fold(args, data):
             wrapper.save_final_predictions(args, epoch, data['fold_i'], model, train_pre_args)
         
         
-    # In case of the CNN model, save the embeddings that are then used for the Pariso models.
+    # In case of the CNN model, save the embeddings that are then used for the Parisot models.
     if args.model == "cnn":
         embedding = wrapper.get_embedding_3dcnn(args, model, data)
         np.save("{}/cnn_storage_{}.npy".format(args.dir_name_embeddings, data["fold_i"]), embedding)        

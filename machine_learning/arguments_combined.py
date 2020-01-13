@@ -16,7 +16,7 @@ def obtain_arguments():
     parser.add_argument('--dataset_type', type=str, default='random',
                         help='On what set are the test and validation set based, can either be \"random\" or \"leave_one_site_out\"')
     
-    parser.add_argument('--ds', type=str, default="abideids",
+    parser.add_argument('--ds', type=str, default="abideboth",
                         help='What dataset to use, only \"abideboth\", \"abide1\", \"abideids\" or \"NYU\" can be chosen.')
     
     parser.add_argument('--print_epoch', type=int, default=50,
@@ -76,7 +76,8 @@ def obtain_arguments():
     
     #%% DATA parameters    
     parser.add_argument('--raw_data_preprocess_method', type=str, default="alff",
-                        help='Which preprocessing method is used to summarize over time in the fmri scans.')
+                        help='Which preprocessing method is used to summarize over time in the fmri scans. \
+                        Options to be chosen from "alff", "autocorr", "entropy", "degree_centrality_binarize", "degree_centrality_weighted", "eigenvector_centrality_binarize", "eigenvector_centrality_weighted", "alff" and others in fmri_summaries folder')
     
     
     #%% Process the arguments

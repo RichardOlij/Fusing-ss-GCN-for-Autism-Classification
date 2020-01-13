@@ -322,9 +322,9 @@ class Net3d9(nn.Module):
         x = self.pool1(F.relu(self.conv1(x)))
         # print(x.shape) # b,6,20,25,20
         x = self.pool2(F.relu(self.conv2(x)))
-        # print(x.shape) # b,16,8,10,8
+        #print("FIRST",x.shape) # b,16,8,10,8
         x = x.view(-1, self.lin_dim)
-        # print(x.shape) # b,10240
+        #print("SECOND",x.shape) # b,10240
         return x
     
 class Net3d10(nn.Module):
@@ -359,4 +359,40 @@ class Net3d10(nn.Module):
         # print(x.shape) # b,16,8,10,8
         x = x.view(-1, self.lin_dim)
         # print(x.shape) # b,10240
+        return x
+
+class Net3d11(nn.Module):
+    """
+    Version 2 with dropout 0.7.
+    """
+    
+    def __init__(self, args):
+        super(Net3d11, self).__init__()
+        self.args = args
+
+        self.conv1 = nn.Conv3d(1, 6, 5)
+        self.pool1 = nn.MaxPool3d(2, 2)
+        self.conv2 = nn.Conv3d(6, 16,5)
+        self.pool2 = nn.MaxPool3d(2, 2)
+        self.lin_dim = 16*8*10*8
+        self.lin_dim_2 = 3000
+        self.fc0 = nn.Linear(self.lin_dim, self.lin_dim_2)
+        self.fc1 = nn.Linear(self.lin_dim_2, 2)  
+        self.drop = nn.Dropout(0.7)
+
+    def forward(self, x):
+        x = self.get_embedding(x)
+        x = self.fc1(x)
+        x = self.drop(x)
+        return x
+    
+    def get_embedding(self, x):
+        # print(x.shape) # b,1,45,54,45
+        x = self.pool1(F.relu(self.conv1(x)))
+        # print(x.shape) # b,6,20,25,20
+        x = self.pool2(F.relu(self.conv2(x)))
+        # print(x.shape) # b,16,8,10,8
+        x = x.view(-1, self.lin_dim)
+        # print(x.shape) # b,10240
+        x = self.fc0(x)
         return x

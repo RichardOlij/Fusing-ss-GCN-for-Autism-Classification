@@ -5,7 +5,7 @@ from evaluate import evaluate
 from parisot_py_model import GCN
 import torch
 import torch.optim as optim
-
+from scipy import stats
 
 def preprocess_features(features):
     """Row-normalize feature matrix and convert to tuple representation"""
@@ -15,6 +15,19 @@ def preprocess_features(features):
     r_mat_inv = np.diag(r_inv)
     features = r_mat_inv.dot(features)
     return features  
+
+def preprocess_features_min_max(features):
+    """Row-normalize feature matrix and convert to tuple representation"""
+    max_row = np.max(features, axis = 1)
+    min_row = np.min(features, axis = 1)
+    features = (features.transpose() - min_row).transpose()
+    features = (features.transpose()/ (max_row-min_row)).transpose()
+    return features  
+
+def preprocess_features_z_score(features):
+    """Row-normalize feature matrix and convert to tuple representation"""
+    features = stats.zscore(features, axis=1, ddof=1)
+    return features 
 
 def masked_softmax_cross_entropy(preds, labels):
     """Softmax cross-entropy loss with masking."""
