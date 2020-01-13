@@ -5,7 +5,7 @@ import torch.nn as nn
 import numpy as np
 from torch.utils import data as udata
 from store_datadict import StoreDataDict
-from cnn_model import Net3d1, Net3d2, Net3d3, Net3d4, Net3d5, Net3d6, Net3d7, Net3d8, Net3d9, Net3d10
+from cnn_model import Net3d1, Net3d2, Net3d3, Net3d4, Net3d5, Net3d6, Net3d7, Net3d8, Net3d9, Net3d10, Net3d11
 import sklearn.metrics as sklearnmetrics
 from evaluate import evaluate
 
@@ -150,6 +150,8 @@ def train_pre(args, data):
         model = Net3d9(args).to(args.device)
     elif args.cnn_model == 10:
         model = Net3d10(args).to(args.device)
+    elif args.cnn_model == 11:
+        model = Net3d11(args).to(args.device)
     else:
         raise ValueError("Cnn model \"\" does not exist.".format(args.cnn_model))
     criterion = nn.CrossEntropyLoss().to(args.device)

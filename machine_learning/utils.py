@@ -6,7 +6,7 @@ import scipy.sparse as sp
 from scipy.sparse.linalg.eigen.arpack import eigsh
 import os
 import matplotlib.pyplot as plt
-
+from scipy import stats
 
 #%% Process strings and inputs etc.
 def process_str_bool(input:str):
@@ -173,6 +173,19 @@ def preprocess_features(features):
     r_mat_inv = np.diag(r_inv)
     features = r_mat_inv.dot(features)
     return features  
+
+def preprocess_features_min_max(features):
+    """Row-normalize feature matrix and convert to tuple representation"""
+    max_row = np.max(features, axis = 1)
+    min_row = np.min(features, axis = 1)
+    features = (features.transpose() - min_row).transpose()
+    features = (features.transpose()/ (max_row-min_row)).transpose()
+    return features 
+
+def preprocess_features_z_score(features):
+    """Row-normalize feature matrix and convert to tuple representation"""
+    features = stats.zscore(features, axis=1, ddof=1)
+    return features 
 
 #%% Dimensionality reduction
 def reduce_dim_ridge_(n_features, data, matrix):
@@ -344,7 +357,7 @@ def plot_results_(args, experiment_type:str, store_data_dicts, list_tuple_lines_
     plt.legend()
             
     os.makedirs(args.dir_name_results, exist_ok=True)
-    plt.savefig('{}/{}.png'.format(args.dir_name_results, experiment_type), bbox_inches="tight", transparent=True, dpi=400)
+    plt.savefig('{}/{}.png'.format(args.dir_name_results, experiment_type), bbox_inches="tight", transparent=False, dpi=400)
     
     # Only show in the case of spyder executer, terminal or colab should not show the images.
     if any('SPYDER' in name for name in os.environ):
